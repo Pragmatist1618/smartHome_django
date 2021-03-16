@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% block title %}<title>Base</title>{% endblock title %}
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand text-success" href="{% url 'smarthome:index' %}">Smart Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/tasks/' %} active {% endif %}"
+                       aria-current="page" href="{% url 'smarthome:tasks' %}">Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if request.path == '/record-log/' %} active {% endif %}" aria-current="page"
+                       href="{% url 'record-log:record-log' %}">Record Log</a>
+                </li>
+            </ul>
+            {% if request.user.is_superuser %}
+                <a class="text-secondary nav-link" href="/admin/" target="_blank">Admin</a>
+            {% endif %}
+            {% if not user.is_authenticated %}
+                <a class="text-secondary nav-link" href="{% url 'login' %}{% if request.path != '/accounts/login/' %}
+                ?next={{ request.path }}{% endif %}">
+                    Login
+                </a>
+            {% else %}
+                <a class="text-secondary nav-link" href="{% url 'logout' %}?next={{ request.path }}">
+                    Logout
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+
+<body>
+<hr class="p-0 m-0">
+<div class="bg-light p-2">
+    <div class="">
+        <div class="row">
+            {% if user.is_authenticated %}
+                <div class="col-lg-3 col-md-3 col-sm-4 text-center">
+                    <div class="container text-success">Привет, {{ user }}!</div>
+                </div>
+                <div class="col-lg-7 col-md-6 col-sm-5"></div>
+                <div class="col-lg-2 col-md-3 col-sm-3 text-center {% if num_books > 0 %}alarm{% endif %}">Новых
+                    задач: {{ num_books }}</div>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<hr class="p-0 m-0">
+{% block content %}
+
+{% endblock content %}
+<form id="csrf_getting_form" class="hidden">
+    {% csrf_token %}
+</form>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/ajax.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Smart Home</title>
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container mt-4 text-success">
+        <h3>Пункт управления умным домом</h3>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="true" aria-controls="collapseOne">
+                            Управление светом
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="row bt bl br">
+                                        <div class="col-3 bl bt br box kitchen"></div>
+                                        <div class="col-3 border box bath"></div>
+                                        <div class="col-3 border box wc"></div>
+                                        <div class="col-3 bl bt br box cor"></div>
+                                    </div>
+                                    <div class="row bl br">
+                                        <div class="col-3 bl bb br box kitchen"></div>
+                                        <div class="col-3 bt bb bl box cor"></div>
+                                        <div class="col-3 bb bt box cor"></div>
+                                        <div class="col-3 bb br box cor"></div>
+                                    </div>
+                                    <div class="row bl br">
+                                        <div class="col-3 bt bl box bedroom"></div>
+                                        <div class="col-3 bt box bedroom"></div>
+                                        <div class="col-3 bt box bedroom"></div>
+                                        <div class="col-3 bt br box bedroom"></div>
+                                    </div>
+                                    <div class="row bl br bb">
+                                        <div class="col-3 bb bl box bedroom"></div>
+                                        <div class="col-3 bb box bedroom"></div>
+                                        <div class="col-3 bb box bedroom"></div>
+                                        <div class="col-3 bb br box bedroom"></div>
+                                    </div>
+                                </div>
+                                <div class="col-2 offset-md-1">
+                                    <div class="container">
+                                        <div class="row pt-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox"
+                                                       id="checkbox_cor" name="checkbox_cor" data-room="cor"
+                                                       {% if gpio_state.cor_gpio.state %}
+                                                            checked value="True"
+                                                       {% else %} value="False" {% endif %}>
+                                                <label class="form-check-label" for="checkbox_car">Прихожая</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox"
+                                                       id="checkbox_bedroom" name="checkbox_bedroom" data-room="bedroom"
+                                                       {% if gpio_state.bedroom_gpio.state %}
+                                                            checked value="True"
+                                                       {% else %} value="False" {% endif %}>
+                                                <label class="form-check-label" for="checkbox_bedroom">Спальня</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                aria-expanded="false" aria-controls="collapseTwo">
+                            Управление приборами
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                        laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
+                        coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes
+                        anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard
+                        of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                                aria-expanded="false" aria-controls="collapseThree">
+                            Планировщик задач
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                        laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
+                        coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes
+                        anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard
+                        of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

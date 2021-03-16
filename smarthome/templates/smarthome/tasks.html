@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Tasks</title>
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="col-6 col-sm-8 pt-4">
+            <form method="POST" action="add-task/">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Новая задача:</label>
+                    <textarea class="form-control" name="text" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Добавить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+
+        <div class="col-6 col-sm-8">
+            <h3 class="text-success mb-4">Список задач:</h3>
+        </div>
+        <hr>
+        {% for task in tasks %}
+            <div class="row">
+                <div class="col-md-8 col-xs-12 col-sm-12 pb-sm-2 pb-md-0 pb-2">
+                    <strong>
+                        {{ forloop.counter }}.
+                    </strong>
+                    <i class="text-secondary">{{ task.user }}</i>
+                    <h5 class="mt-2">{{ task.text }}</h5>
+                    <span class="text-secondary">(Дата создания: {{ task.date_added|date:'H:i d/m/Y' }})</span>
+                </div>
+                <div class="col-md-4 col-xs-12 col-sm-12 pt-xs-0 pt-md-4">
+                    <a class="" href="performed/{{ task.id }}">
+                        <button class="btn btn-success">Выполнено</button>
+                    </a>
+                </div>
+            </div>
+            <hr>
+        {% empty %}
+            <p>Задач нет!</p>
+        {% endfor %}
+
+
+    </div>
+    </div>
+
+{% endblock content %}
