@@ -11,4 +11,8 @@ urlpatterns = [
     path('tasks/add-task/', views.add_task),
     path('change-gpio/', views.change_gpio, name='change_gpio'),
     path('state-gpio/', views.state_gpio, name='state_gpio'),
+    path('video_feed/', views.video_feed),
+    # path('webcam_feed', views.webcam_feed, name='webcam_feed'),
+	# path('livecam_feed', views.livecam_feed, name='livecam_feed'),
+
 ]

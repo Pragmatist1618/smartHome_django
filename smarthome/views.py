@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, JsonResponse
+from django.http.response import StreamingHttpResponse
 from django.shortcuts import render
+
+from smarthome.camera import VideoCamera
 
 from .models import Task
 from gpio.models import GPIO
@@ -20,7 +23,7 @@ def index(request):
     gpio_state = {}
     for gpio in gpios:
         gpio_state[gpio.name] = {'num': gpio.num, 'state': gpio.state}
-    #print(gpio_state)
+    # print(gpio_state)
     context = {
         'num_books': num_books,
         'gpio_state': gpio_state,
@@ -87,3 +90,25 @@ def state_gpio(request):
         except GPIO.DoesNotExist:
             print('state_gpio error')
     return JsonResponse(data)
+
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+def video_feed(request):
+    return StreamingHttpResponse(gen(VideoCamera()),
+                                 content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+# def webcam_feed(request):
+#     return StreamingHttpResponse(gen(IPWebCam()),
+#                                  content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+# def livecam_feed(request):
+#     return StreamingHttpResponse(gen(LiveWebCam()),
+#                                  content_type='multipart/x-mixed-replace; boundary=frame')
